@@ -16,11 +16,11 @@ pacman -Sy glibc dialog curl --noconfirm --needed
 
 
 #pacman -Sy dialog --noconfirm --needed
-curl -LJO https://github.com/CodigoCristo/arcris/archive/master.tar.gz
-tar  -xvf  arcris-master.tar.gz
-cd arcris-master
+# curl -LJO https://github.com/CodigoCristo/arcris/archive/master.tar.gz
+# tar  -xvf  arcris-master.tar.gz
+# cd arcris-master
 
-cp .dialogrc /root
+#cp .dialogrc /root
 chmod +x *
 sleep 2
 clear
