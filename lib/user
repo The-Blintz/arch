@@ -62,6 +62,7 @@ username=$(dialog --backtitle "${title}" --title "${titleuser}" \
   done
 
 
+dialog --backtitle "${title}" --title "${title_user_main}" --stdout --ok-label "${btn_ok_main}"  --msgbox "${msg_hostname_main}" 7 37
 
 ##########################
 # HOSTNAME
