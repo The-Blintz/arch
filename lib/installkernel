@@ -59,13 +59,8 @@ arch-chroot /mnt /bin/bash -c "pacman -S dosfstools --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S exfatprogs --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S ntfs-3g  --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S reiserfsprogs --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S btrfs-progs --noconfirm --needed"
-
-arch-chroot /mnt /bin/bash -c "pacman -S bridge-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-firmware --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S firewalld --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-tools --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S tlp --noconfirm --needed"
+ 
+ 
 
 
 
@@ -125,13 +120,6 @@ arch-chroot /mnt /bin/bash -c "pacman -S dosfstools --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S exfatprogs --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S ntfs-3g  --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S reiserfsprogs --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S btrfs-progs --noconfirm --needed"
-
-arch-chroot /mnt /bin/bash -c "pacman -S bridge-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-firmware --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S firewalld --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-tools --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S tlp --noconfirm --needed"
 
 arch-chroot /mnt /bin/bash -c "systemctl enable dhcpcd NetworkManager"
 
@@ -188,13 +176,6 @@ arch-chroot /mnt /bin/bash -c "pacman -S dosfstools --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S exfatprogs --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S ntfs-3g  --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S reiserfsprogs --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S btrfs-progs --noconfirm --needed"
-
-arch-chroot /mnt /bin/bash -c "pacman -S bridge-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-firmware --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S firewalld --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-tools --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S tlp --noconfirm --needed"
 
 arch-chroot /mnt /bin/bash -c "systemctl enable dhcpcd NetworkManager"
 
@@ -251,13 +232,6 @@ arch-chroot /mnt /bin/bash -c "pacman -S dosfstools --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S exfatprogs --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S ntfs-3g  --noconfirm --needed"
 arch-chroot /mnt /bin/bash -c "pacman -S reiserfsprogs --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S btrfs-progs --noconfirm --needed"
-
-arch-chroot /mnt /bin/bash -c "pacman -S bridge-utils --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-firmware --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S firewalld --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S sof-tools --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "pacman -S tlp --noconfirm --needed"
 
 arch-chroot /mnt /bin/bash -c "systemctl enable dhcpcd NetworkManager"
 

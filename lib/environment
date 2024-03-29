@@ -27,7 +27,7 @@ do
 
 seleccionDE=true
 
-cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "${title}" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --menu "\nSelecciona tu escritorio a instalar - (DE)\n " 21 60 21)
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "${title}" --column-separator "|" --no-tags --ok-label '< Seleccionar >' --menu "Selecciona tu escritorio a instalar - (DE)" 22 60 19)
 
 options=(1 " > | xfce4 | Xfce desktop| <"
          2 " > | gnome | GNOME Classic desktop| <"
@@ -83,8 +83,7 @@ cmd=(dialog --keep-tite --backtitle "${title}" \
 Selecciona una opción para GNOME \n " 12 60 20)
 
 options=(1 "   Gnome || Sistema Completo  "
-         2 "   Gnome || Minimalista       "
-         3 "   Gnome || Tema Arcris       ")
+         2 "   Gnome || Minimalista       ")
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -98,9 +97,6 @@ do
         2)  DE="Gnome Lite"
             ;;
 
-        3)  DE="Gnome Arcris"
-            ;;
-            
     esac
 done
             ;;
@@ -109,7 +105,7 @@ done
 cmd=(dialog --keep-tite --backtitle "${title}" \
 --no-collapse --cr-wrap --column-separator "|" --no-tags \
 --ok-label '< Seleccionar >' --nocancel --menu "\n \
-Selecciona una opción para KDE Plasma \n " 12 60 20)
+Selecciona una opción para GNOME \n " 12 60 20)
 
 options=(1 "   Plasma || Sistema Completo  "
          2 "   Plasma || Minimalista       ")
@@ -178,13 +174,12 @@ done
 seleccionWM=true
 
 cmd=(dialog --keep-tite --backtitle "${title}" \
---no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '  Seleccionar  ' --menu "\nSelecciona tu gestor de ventana a instalar - (WM)\n " 14 60 14)
+--no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label '< Seleccionar >' --menu "Selecciona tu gestor de ventana a instalar - (WM)" 20 55 16)
 
-options=(1 "> i3wm | Disponible <"
-         2 "> bspwm | Disponible <"
-         3 "> dwm | Disponible <"
-         4 "> awesome | Disponible <"
-         5 "> openbox | Disponible <")
+options=(1 "> i3wm | 150MB de RAM "
+         2 "> qtile | Disponible <"
+         3 "> Awesome | Disponible <")
+
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -196,20 +191,13 @@ do
             ;;
 
         2)
-            WM="bspwm"
+            WM="qtile"
             ;;
 
         3)
-            WM="dwm"
-            ;;
-
-        4)
             WM="awesome"
             ;;
 
-        5)
-            WM="openbox"
-            ;;
     esac
 done
 #FINAL (WM)
@@ -253,10 +241,10 @@ case $environment in
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
   arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xfce4 --noeditmenu --noconfirm --needed"
@@ -287,53 +275,6 @@ case $environment in
 
   arch-chroot /mnt /bin/bash -c "systemctl enable lightdm"
 
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S plata-theme-bin --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gtk-engine-murrine --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-roboto --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S pavucontrol --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gedit --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gedit-plugins --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S plank --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S plank-theme-namor --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S android-file-transfer android-tools android-udev msmtp libmtp libcddb gvfs gvfs-afc gvfs-smb gvfs-gphoto2 gvfs-mtp gvfs-goa gvfs-nfs gvfs-google gst-libav dosfstools f2fs-tools ntfs-3g udftools nilfs-utils polkit gpart mtools cifs-utils --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S wget unzip zip --noeditmenu --noconfirm --needed"
-
-  clear
-
-  arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCristo/themexfce4/master/configxfce4.zip -P /home/$username/"
-  # arch-chroot /mnt /bin/bash -c "rm -r /home/$username/.config"
-  ls --all /home/$username
-  echo ""
-  sleep 10
-  arch-chroot /mnt /bin/bash -c "unzip -o /home/$username/configxfce4.zip -d /home/$username/"
-  arch-chroot /mnt /bin/bash -c "rm /home/$username/configxfce4.zip"
-  arch-chroot /mnt /bin/bash -c "chown -R $username:users /home/$username/.config/"
-  echo ""
-  sleep 10
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lightdm-webkit2-greeter --noeditmenu --noconfirm --needed"
-
-arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCristo/themexfce4/master/glorius.zip -P /home/$username/"
-echo ""
-sleep 10
-arch-chroot /mnt /bin/bash -c "unzip -o /home/$username/glorius.zip -d /usr/share/lightdm-webkit/themes/"
-arch-chroot /mnt /bin/bash -c "rm /home/$username/glorius.zip"
-
-sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = glorious #\1/g' /mnt/etc/lightdm/lightdm-webkit2-greeter.conf
-sed -i 's/^debug_mode\s*=\s*\(.*\)/debug_mode = true #\1/g' /mnt/etc/lightdm/lightdm-webkit2-greeter.conf
-sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-greeter/g' /mnt/etc/lightdm/lightdm.conf
-
-# Comprimir un directorio
-# zip sampleZipFile.zip -r /sampleZip/ExampleDir
-
-# para sobreescribir archivos
-# unzip -o sampleZipFile.zip 
-
-# Descomprimir un archivo a un directorio diferente
-# unzip sampleZipFile.zip -d /usr/sampleZip/ExampleDir
-
   ;;
 
 
@@ -343,11 +284,11 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-gre
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xfce4 --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xfce4-goodies --noeditmenu --noconfirm --needed"
@@ -387,11 +328,11 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-gre
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome  --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-extra --noeditmenu --noconfirm --needed"
@@ -401,7 +342,6 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-gre
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S chrome-gnome-shell --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S webp-pixbuf-loader --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-tweaks --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
@@ -431,11 +371,11 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-gre
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-shell --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gdm --noeditmenu --noconfirm --needed"
@@ -443,8 +383,6 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-gre
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-tweaks --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-terminal --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S nautilus --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-keyring --noeditmenu --noconfirm --needed"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
@@ -465,94 +403,6 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-gre
   arch-chroot /mnt /bin/bash -c "systemctl enable gdm"
 
   ;;
-
-
-
-  "Gnome Arcris")
-  echo "" 
-  echo "Se esta instalando el entorno Gnome Arcris:" 
-  echo "" 
-
-  arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-shell --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gdm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-control-center --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-tweaks --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-terminal --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S nautilus --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-keyring --noeditmenu --noconfirm --needed"
-
-  # THEME ####################
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-shell-extensions  --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-menus --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S chrome-gnome-shell --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-system-monitor --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
-  ############################
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-inconsolata --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-font-awesome --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S awesome-terminal-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S noto-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S noto-fonts-emoji --noeditmenu --noconfirm --needed"
-  
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbs --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S freetype2 --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S poppler-glib --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S libgsf --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S raw-thumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S libgsf --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "systemctl enable gdm"
-
-
-
-arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S android-file-transfer android-tools android-udev msmtp libmtp libcddb gvfs gvfs-afc gvfs-smb gvfs-gphoto2 gvfs-mtp gvfs-goa gvfs-nfs gvfs-google gst-libav dosfstools f2fs-tools ntfs-3g udftools nilfs-utils polkit gpart mtools cifs-utils --noeditmenu --noconfirm --needed"
-arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S wget unzip zip --noeditmenu --noconfirm --needed"
-
-clear
-
-arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCristo/themegnome/master/config_gnome.zip -P /home/$username/"
-arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCristo/themegnome/master/local_gnome.zip -P /home/$username/"
-arch-chroot /mnt /bin/bash -c "wget https://raw.githubusercontent.com/CodigoCristo/themegnome/master/theme_gnome.zip -P /home/$username/"
-ls /home/$username
-echo ""
-sleep 10
-arch-chroot /mnt /bin/bash -c "unzip -o /home/$username/config_gnome.zip -d /home/$username/"
-arch-chroot /mnt /bin/bash -c "unzip -o /home/$username/local_gnome.zip -d /home/$username/"
-arch-chroot /mnt /bin/bash -c "unzip -o /home/$username/theme_gnome.zip -d /home/$username/"
-arch-chroot /mnt /bin/bash -c "rm /home/$username/config_gnome.zip"
-arch-chroot /mnt /bin/bash -c "rm /home/$username/local_gnome.zip"
-arch-chroot /mnt /bin/bash -c "rm /home/$username/theme_gnome.zip"
-arch-chroot /mnt /bin/bash -c "chown -R $username:users /home/$username/.config/"
-arch-chroot /mnt /bin/bash -c "chown -R $username:users /home/$username/.local/"
-arch-chroot /mnt /bin/bash -c "chown -R $username:users /home/$username/.themes/"
-echo ""
-sleep 10
-
-# Comprimir un directorio
-# zip sampleZipFile.zip -r /sampleZip/ExampleDir
-
-# para sobreescribir archivos
-# unzip -o sampleZipFile.zip 
-
-# Descomprimir un archivo a un directorio diferente
-# unzip sampleZipFile.zip -d /usr/sampleZip/ExampleDir
-
-
-  ;;
-
-
 
 
   "KDE Plasma")
@@ -561,11 +411,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S plasma --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S kde-applications --noeditmenu --noconfirm --needed"
@@ -620,11 +470,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S plasma --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S dolphin --noeditmenu --noconfirm --needed"
@@ -662,11 +512,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S deepin --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S deepin-extra --noeditmenu --noconfirm --needed"
@@ -692,7 +542,7 @@ sleep 10
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S raw-thumbnailer --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S libgsf --noeditmenu --noconfirm --needed"
 
-  arch-chroot /mnt /bin/bash -c "systemctl enable lightdm.service"
+  arch-chroot /mnt /bin/bash -c "systemctl enable lightdm"
 
   ;;
 
@@ -703,11 +553,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S mate --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S mate-extra --noeditmenu --noconfirm --needed"
@@ -737,11 +587,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxqt --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
@@ -769,11 +619,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxde --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxmed --noeditmenu --noconfirm --needed"
@@ -794,11 +644,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxde-gtk3 --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S slock --noeditmenu --noconfirm --needed"
@@ -818,11 +668,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S budgie-desktop --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S budgie-screensaver --noeditmenu --noconfirm --needed"
@@ -856,11 +706,11 @@ sleep 10
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S cinnamon --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S slock --noeditmenu --noconfirm --needed"
@@ -915,11 +765,11 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greet
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-flashback --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-backgrounds --noeditmenu --noconfirm --needed"
@@ -959,11 +809,11 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greet
   echo "" 
 
   arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
+  arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
 
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S enlightenment --noeditmenu --noconfirm --needed"
   arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S entrance-git --noeditmenu --noconfirm --needed"
@@ -986,269 +836,6 @@ sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greet
   arch-chroot /mnt /bin/bash -c "systemctl enable entrance"
 
   ;;
-
-
-"i3wm")
-  echo "" 
-  echo "Se esta instalando el entorno i3wm:" 
-  echo "" 
-
-  arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S i3-gaps --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S i3blocks --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S i3lock --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S i3status --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S dmenu --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rofi --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S st --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rxvt-unicode --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ly --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S pcmanfm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S tumbler --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbs --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S raw-thumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S freetype2 --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S network-manager-applet --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S polkit-gnome --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-keyring  --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S awesome-terminal-fonts --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxappearance --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S feh --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xclip --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S maim --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S accountsservice --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "systemctl enable ly"
-
-  ;;
-
-
-
-"bspwm")
-  echo "" 
-  echo "Se esta instalando el entorno bspwm:" 
-  echo "" 
-
-  arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S bspwm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S sxhkd --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S dmenu --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rofi --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S st --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rxvt-unicode --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ly --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S pcmanfm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S tumbler --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbs --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S raw-thumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S freetype2 --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S network-manager-applet --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S polkit-gnome --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-keyring  --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S awesome-terminal-fonts --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxappearance --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S feh --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xclip --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S maim --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S accountsservice --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "systemctl enable ly"
-  
-  ;;
-
-
-"dwm")
-  echo "" 
-  echo "Se esta instalando el entorno dwm:" 
-  echo "" 
-
-  arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S dwm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S dmenu --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rofi --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S st --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rxvt-unicode --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ly --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S pcmanfm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S tumbler --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbs --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S raw-thumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S freetype2 --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S network-manager-applet --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S polkit-gnome --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-keyring  --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S awesome-terminal-fonts --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxappearance --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S feh --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xclip --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S maim --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S accountsservice --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "systemctl enable ly"
-  
-  ;;
-
-
-
-"awesome")
-  echo "" 
-  echo "Se esta instalando el entorno Awesome:" 
-  echo "" 
-
-  arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S awesome --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S dmenu --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rofi --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S st --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rxvt-unicode --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ly --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S pcmanfm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S tumbler --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbs --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S raw-thumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S freetype2 --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S network-manager-applet --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S polkit-gnome --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-keyring  --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S awesome-terminal-fonts --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxappearance --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S feh --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xclip --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S maim --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S accountsservice --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "systemctl enable ly"
-  
-  ;;
-
-
-
-"openbox")
-  echo "" 
-  echo "Se esta instalando el entorno Open box:" 
-  echo "" 
-
-  arch-chroot /mnt /bin/bash -c "pacman -S xorg --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-apps --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-server --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-xinit --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xorg-twm --noconfirm"
-  #arch-chroot /mnt /bin/bash -c "pacman -S xterm --noconfirm"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S openbox --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S obconf --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxappearance-obconf --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxinput --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxrandr --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S obkey --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S obapps --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ob-autostart --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S dmenu --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rofi --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S st --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S rxvt-unicode --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ly --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S pcmanfm --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S tumbler --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbs --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ffmpegthumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S raw-thumbnailer --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S freetype2 --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S network-manager-applet --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S polkit-gnome --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-keyring  --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-hack --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnu-free-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S awesome-terminal-fonts --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-dejavu --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S ttf-liberation --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S papirus-icon-theme --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S gnome-themes-extra --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S lxappearance --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S feh --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S xclip --noeditmenu --noconfirm --needed"
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S maim --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "sudo -u $username yay -S accountsservice --noeditmenu --noconfirm --needed"
-
-  arch-chroot /mnt /bin/bash -c "systemctl enable ly"
-  
-  ;;
-
-
 
 
 esac
