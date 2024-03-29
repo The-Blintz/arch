@@ -5,12 +5,12 @@ users () {
 
 
 
-hostname=""
+hostname="Arcris"
 username=""
 userpasswd=""
 rootpasswd=""
 
-dialog --backtitle "${title}" --title "${title_user_main}" --stdout --ok-label "${btn_ok_main}"  --msgbox "${msg_user_main}" 7 37
+dialog --backtitle "${title}" --title "-| User |-" --stdout --ok-label "< OK >"  --msgbox "\nEscriba su usuario y contraseña. \n " 7 37
 
 ##########################
 # USER
@@ -62,29 +62,28 @@ username=$(dialog --backtitle "${title}" --title "${titleuser}" \
   done
 
 
-dialog --backtitle "${title}" --title "${title_user_main}" --stdout --ok-label "${btn_ok_main}"  --msgbox "${msg_hostname_main}" 7 37
 
 ##########################
 # HOSTNAME
 ##########################
-while true; do
-    hostname=$(dialog --backtitle "${title}" --title "${title_hostname}" \ --nocancel 
-    --inputbox "${msg_hostname}" 15 65  3>&1 1>&2 2>&3)
+#while true; do
+#    hostname=$(dialog --backtitle "${title}" --title "${title_hostname}" --nocancel \
+#    --inputbox "${msg_hostname}" 12 65 "ArcriS" 3>&1 1>&2 2>&3)
+#
+#
+#   # Hostname must be alpha-numeric and may contain a dash only in between
+#    if printf "%s" "$hostname" | grep -Eoq "^[a-zA-Z0-9-]{1,63}$" \
+#      && [ "${hostname:0:1}" != "-" ] \
+#      && [ "${hostname: -1}" != "-" ]; then
+#      break
+#    else
+#      dialog --backtitle "${title}"  --title "${title_hostname_fail}" --msgbox "${msg_hostname_fail}" 12 68
+#    fi
+#
+#  done
 
 
-   # Hostname must be alpha-numeric and may contain a dash only in between
-    if printf "%s" "$hostname" | grep -Eoq "^[a-zA-Z0-9-]{1,63}$" \
-      && [ "${hostname:0:1}" != "-" ] \
-      && [ "${hostname: -1}" != "-" ]; then
-      break
-    else
-      dialog --backtitle "${title}"  --title "${title_hostname_fail}" --msgbox "${msg_hostname_fail}" 12 68
-    fi
-
-  done
-
-
-dialog --backtitle "${title}" --title "-| Root |-" --stdout --ok-label "${btn_ok_main}"  --msgbox "${msg_passwdroot_main}" 7 43
+dialog --backtitle "${title}" --title "-| Root |-" --stdout --ok-label "< OK >"  --msgbox "\nEscriba su contraseña de administrador. \n " 7 43
 
 ##########################
 # PASSWD ROOT
