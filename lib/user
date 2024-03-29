@@ -67,8 +67,8 @@ username=$(dialog --backtitle "${title}" --title "${titleuser}" \
 # HOSTNAME
 ##########################
 while true; do
-    hostname=$(dialog --backtitle "${title}" --title "${title_hostname}" --nocancel \
-    --inputbox "${msg_hostname}" 12 65 "ArcriS" 3>&1 1>&2 2>&3)
+    hostname=$(dialog --backtitle "${title}" --title "${title_hostname}" \ --nocancel 
+    --inputbox "${msg_hostname}" 15 65  3>&1 1>&2 2>&3)
 
 
    # Hostname must be alpha-numeric and may contain a dash only in between
